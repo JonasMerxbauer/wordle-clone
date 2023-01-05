@@ -9,14 +9,17 @@ import { motion } from "framer-motion";
 const Grid: React.FC = () => {
   const [guesses] = useAtom(guessedWordsAtom);
   const [currentGuess] = useAtom(currentGuessAtom);
-  const emptyRows = Array(5 - guesses.length).fill("empty");
+  const rows = 5;
+  const emptyRows = Array(
+    rows >= guesses.length ? rows - guesses.length : 0
+  ).fill("empty");
 
   return (
     <div className="grid grid-cols-1 grid-rows-5 gap-1">
       {guesses.map((guess, i) => {
         return <CompletedRow key={i} word={guess} />;
       })}
-      <CurrentRow word={currentGuess} />
+      {guesses.length <= rows && <CurrentRow word={currentGuess} />}
       {emptyRows.map((_, i) => {
         return <EmptyRow key={i} />;
       })}
