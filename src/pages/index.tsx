@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { type NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Grid from "../components/Grid";
@@ -11,6 +12,7 @@ import {
   guessedWordsAtom,
   searchedWordAtom,
   modalAtom,
+  isGuestAtom,
 } from "../store/store";
 import { WORDS } from "../lib/wordlist";
 import Modal from "../components/Modal";
@@ -21,6 +23,8 @@ const Home: NextPage = () => {
   const [, setGuessWordsArray] = useAtom(guessedWordsAtom);
   const [searchedWord] = useAtom(searchedWordAtom);
   const [, setIsModalOpen] = useAtom(modalAtom);
+  const { data: sessionData } = useSession();
+  const [isGuest] = useAtom(isGuestAtom);
 
   const allKeys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -97,8 +101,28 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <div className="flex min-h-screen w-screen flex-col items-center justify-center gap-4 bg-black">
-          <Game onChar={onChar} onEnter={onEnter} onBackspace={onBackspace} />
+        <div className="flex min-h-screen w-screen flex-col bg-black">
+          {sessionData && (
+            <div className="m-4 flex gap-2 self-end">
+              <Image
+                alt="Profile picture"
+                className="mr-1 rounded-full object-cover"
+                src={sessionData.user?.image ? sessionData.user.image : ""}
+                width={48}
+                height={48}
+              />
+              <button
+                className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+                onClick={() => signOut()}
+              >
+                Log out
+              </button>
+            </div>
+          )}
+          {(sessionData || isGuest) && (
+            <Game onChar={onChar} onEnter={onEnter} onBackspace={onBackspace} />
+          )}
+          {!sessionData && !isGuest && <Login />}
         </div>
       </main>
     </>
@@ -107,36 +131,41 @@ const Home: NextPage = () => {
 
 export default Home;
 
-type Props = {
+const Game = ({
+  onChar,
+  onEnter,
+  onBackspace,
+}: {
   onChar: (value: string) => void;
   onEnter: () => void;
   onBackspace: () => void;
-};
-
-const Game = ({ onChar, onEnter, onBackspace }: Props) => {
+}) => {
   return (
-    <>
+    <div className="flex flex-1 flex-col items-center justify-center gap-4">
       <Grid />
       <Keyboard onChar={onChar} onEnter={onEnter} onBackspace={onBackspace} />
-      <AuthShowcase />
       <Modal />
-    </>
+    </div>
   );
 };
 
-const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
+const Login: React.FC = () => {
+  const [, setIsGuest] = useAtom(isGuestAtom);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-      </p>
+    <div className="flex flex-1 flex-col items-center justify-center gap-8">
+      <h1 className="text-4xl text-white">Wordle</h1>
       <button
         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => signOut() : () => signIn()}
+        onClick={() => signIn()}
       >
-        {sessionData ? "Sign out" : "Sign in"}
+        Log in
+      </button>
+      <button
+        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        onClick={() => setIsGuest(true)}
+      >
+        Play as guest
       </button>
     </div>
   );

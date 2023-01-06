@@ -14,5 +14,7 @@ const searchedWordAtom = atom(() => {
 });
 const modalAtom = atom(false);
 
+const isGuestAtom = atom(false)
 
-export { currentGuessAtom, currentGuessFullAtom, guessedWordsAtom, searchedWordAtom, modalAtom };
+
+export { currentGuessAtom, currentGuessFullAtom, guessedWordsAtom, searchedWordAtom, modalAtom, isGuestAtom };

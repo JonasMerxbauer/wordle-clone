@@ -19,7 +19,7 @@ const Keyboard = ({ onChar, onEnter, onBackspace }: Props) => {
       return;
     }
 
-    if (key === "BACKSPACE") {
+    if (key === "DEL") {
       onBackspace();
       return;
     }
@@ -28,7 +28,7 @@ const Keyboard = ({ onChar, onEnter, onBackspace }: Props) => {
   };
 
   return (
-    <div>
+    <div className="w-screen sm:w-[36rem]">
       {keys.map((row: string[], i: number) => {
         return (
           <div key={i} className="flex justify-center">
@@ -55,7 +55,7 @@ const Key: React.FC<{
   onClick: any;
 }> = ({ value, status, onClick }) => {
   let style = " bg-gray-500";
-  let width = " w-12";
+  let spacing = " flex-1";
 
   switch (status) {
     case "correct":
@@ -69,18 +69,22 @@ const Key: React.FC<{
       break;
   }
 
-  if (value === "BACKSPACE") {
-    width = " w-18";
+  if (value === "DEL" || value === "ENTER") {
+    spacing = " flex-[1.5]";
+  }
+
+  if (value === "") {
+    spacing = " flex-[0.5]";
+    style = " hidden";
   }
 
   return (
-    <div className="m-1">
+    <div className={"m-1" + spacing}>
       <button
         type="button"
         className={
-          "flex h-14 items-center justify-center rounded font-bold text-gray-100 hover:bg-gray-300" +
-          style +
-          width
+          "flex h-14 w-full items-center justify-center rounded font-bold text-gray-100 active:bg-gray-300" +
+          style
         }
         onClick={() => onClick(value)}
       >
@@ -121,8 +125,8 @@ const getStatusOfKeys = (solution: string, guessedWords: string[]) => {
 
 const keys = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-  ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-  ["BACKSPACE", "Z", "X", "C", "V", "B", "N", "M", "Enter"],
+  ["", "A", "S", "D", "F", "G", "H", "J", "K", "L", ""],
+  ["DEL", "Z", "X", "C", "V", "B", "N", "M", "ENTER"],
 ];
 
 export default Keyboard;
