@@ -87,7 +87,10 @@ const Footer: React.FC = () => {
   return (
     <footer className="flex h-16 items-center justify-around dark:bg-black">
       <div>Created by Jonáš Merxbauer</div>
-      <a href="https://github.com/JonasMerxbauer/wordle-clone">
+      <a
+        title="Source code"
+        href="https://github.com/JonasMerxbauer/wordle-clone"
+      >
         <svg
           viewBox="0 0 24 24"
           aria-hidden="true"

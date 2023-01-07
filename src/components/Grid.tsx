@@ -6,7 +6,7 @@ import {
   searchedWordAtom,
 } from "../store/store";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const Grid: React.FC = () => {
   const [guesses] = useAtom(guessedWordsAtom);
