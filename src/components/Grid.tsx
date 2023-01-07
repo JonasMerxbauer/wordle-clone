@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import {
   currentGuessAtom,
   guessedWordsAtom,
-  incorrectAtom,
+  isIncorrectAtom,
   searchedWordAtom,
 } from "../store/store";
 import { motion } from "framer-motion";
@@ -44,16 +44,16 @@ const CompletedRow: React.FC<{ word: string }> = ({ word }) => {
 };
 
 const CurrentRow: React.FC<{ word: string[] }> = ({ word }) => {
-  const [incorrect, setIncorrect] = useAtom(incorrectAtom);
+  const [isIncorrect, setIncorrect] = useAtom(isIncorrectAtom);
 
   useEffect(() => {
     setIncorrect(false);
-  }, [incorrect, setIncorrect]);
+  }, [isIncorrect, setIncorrect]);
 
   return (
     <motion.div
       className="grid grid-cols-5 gap-1"
-      animate={incorrect && { x: [null, 10, 0, -10, 0, 10, 0] }}
+      animate={isIncorrect && { x: [null, 10, 0, -10, 0, 10, 0] }}
     >
       {word.map((letter, i) => {
         return <Letter key={i} value={letter} />;
@@ -90,7 +90,7 @@ const getStatuses = (solution: string, guess: string) => {
     } else if (solutionArray.includes(letter)) {
       statuses.push("present");
     } else {
-      statuses.push("incorrect");
+      statuses.push("isIncorrect");
     }
   });
 
@@ -110,7 +110,7 @@ const Letter: React.FC<{
     case "present":
       style = " bg-yellow-400 dark:bg-yellow-600";
       break;
-    case "incorrect":
+    case "isIncorrect":
       style = " bg-gray-300 dark:bg-gray-700";
       break;
   }
