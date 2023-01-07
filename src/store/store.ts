@@ -12,9 +12,11 @@ const guessedWordsAtom = atom<string[]>([]);
 const searchedWordAtom = atom(() => {
   return WORDS[Math.floor(Math.random()*WORDS.length)]?.toUpperCase();
 });
-const modalAtom = atom(false);
+const modalAtom = atom((get) => get(gameStatusAtom) === "won" || get(gameStatusAtom) === "lost" ? true : false);
 
 const isGuestAtom = atom(false)
 
+const gameStatusAtom = atom("");
 
-export { currentGuessAtom, currentGuessFullAtom, guessedWordsAtom, searchedWordAtom, modalAtom, isGuestAtom };
+
+export { currentGuessAtom, currentGuessFullAtom, guessedWordsAtom, searchedWordAtom, modalAtom, isGuestAtom, gameStatusAtom };

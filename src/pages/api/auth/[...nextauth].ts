@@ -28,8 +28,10 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET
     })
-    // ...add more providers here
   ],
+  theme: {
+    colorScheme: "auto",
+  }
 };
 
 export default NextAuth(authOptions);

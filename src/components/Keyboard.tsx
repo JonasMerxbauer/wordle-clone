@@ -54,18 +54,18 @@ const Key: React.FC<{
   status: string | undefined;
   onClick: any;
 }> = ({ value, status, onClick }) => {
-  let style = " bg-gray-500";
+  let style = " bg-gray-400";
   let spacing = " flex-1";
 
   switch (status) {
     case "correct":
-      style = " bg-green-600";
+      style = " bg-green-400 dark:bg-green-600";
       break;
     case "present":
-      style = " bg-yellow-600";
+      style = " bg-yellow-400 dark:bg-yellow-600";
       break;
     case "incorrect":
-      style = " bg-gray-700";
+      style = " bg-gray-300 dark:bg-gray-700";
       break;
   }
 
@@ -83,7 +83,7 @@ const Key: React.FC<{
       <button
         type="button"
         className={
-          "flex h-14 w-full items-center justify-center rounded font-bold text-gray-100 active:bg-gray-300" +
+          "flex h-14 w-full items-center justify-center rounded font-bold text-gray-800 active:bg-gray-300 dark:text-gray-100" +
           style
         }
         onClick={() => onClick(value)}

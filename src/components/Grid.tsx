@@ -90,23 +90,23 @@ const Letter: React.FC<{
   value: string | undefined;
   status?: string | undefined;
 }> = ({ value, status }) => {
-  let style = " border-2";
+  let style = " border-2 border-gray-900 dark:border-white";
 
   switch (status) {
     case "correct":
-      style = " bg-green-600";
+      style = " bg-green-400 dark:bg-green-600";
       break;
     case "present":
-      style = " bg-yellow-600";
+      style = " bg-yellow-400 dark:bg-yellow-600";
       break;
     case "incorrect":
-      style = " bg-gray-700";
+      style = " bg-gray-300 dark:bg-gray-700";
       break;
   }
 
   if (!value) {
     return (
-      <div className="flex h-14 w-14 rounded-sm border-2 border-gray-600">
+      <div className="flex h-14 w-14 rounded-sm border-2 border-gray-400 dark:border-gray-600">
         {value}
       </div>
     );
@@ -120,7 +120,7 @@ const Letter: React.FC<{
         duration: 0.2,
       }}
       className={
-        "flex h-14 w-14 select-none items-center justify-center rounded-sm text-xl font-bold text-gray-100" +
+        "flex h-14 w-14 select-none items-center justify-center rounded-sm text-xl font-bold text-gray-800 dark:text-gray-100" +
         style
       }
     >
