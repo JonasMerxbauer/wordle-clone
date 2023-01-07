@@ -1,5 +1,4 @@
 import { useAtom } from "jotai";
-import Link from "next/link";
 import {
   gameStatusAtom,
   guessedWordsAtom,
