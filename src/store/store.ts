@@ -18,5 +18,7 @@ const isGuestAtom = atom(false)
 
 const gameStatusAtom = atom("");
 
+const isIncorrectAtom = atom(false)
 
-export { currentGuessAtom, currentGuessFullAtom, guessedWordsAtom, searchedWordAtom, modalAtom, isGuestAtom, gameStatusAtom };
+
+export { currentGuessAtom, currentGuessFullAtom, guessedWordsAtom, searchedWordAtom, modalAtom, isGuestAtom, gameStatusAtom, isIncorrectAtom };

@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { type NextPage } from "next";
 import { useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Grid from "../components/Grid";
 import Keyboard from "../components/Keyboard";
 import {
@@ -11,9 +11,12 @@ import {
   searchedWordAtom,
   isGuestAtom,
   gameStatusAtom,
+  isIncorrectAtom,
 } from "../store/store";
 import { WORDS } from "../lib/wordlist";
 import Modal from "../components/Modal";
+import { AnimatePresence, motion } from "framer-motion";
+import Login from "../components/Login";
 
 const Home: NextPage = () => {
   const [letter, setLetter] = useAtom(currentGuessAtom);
@@ -23,6 +26,7 @@ const Home: NextPage = () => {
   const [gameStatus, setGameStatus] = useAtom(gameStatusAtom);
   const { data: sessionData } = useSession();
   const [isGuest] = useAtom(isGuestAtom);
+  const [, setIncorrect] = useAtom(isIncorrectAtom);
 
   const allKeys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -51,7 +55,7 @@ const Home: NextPage = () => {
           return guessedWords;
         });
       } else {
-        alert("Invalid");
+        setIncorrect(true);
       }
     }
   };
@@ -124,6 +128,7 @@ const Game = ({
 }) => {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4">
+      <Toast />
       <Grid />
       <Keyboard onChar={onChar} onEnter={onEnter} onBackspace={onBackspace} />
       <Modal />
@@ -131,24 +136,23 @@ const Game = ({
   );
 };
 
-const Login: React.FC = () => {
-  const [, setIsGuest] = useAtom(isGuestAtom);
+const Toast: React.FC = () => {
+  const [isIncorrect] = useAtom(isIncorrectAtom);
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-8">
-      <h1 className="text-4xl dark:text-white">Wordle</h1>
-      <button
-        className="rounded-full bg-black/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20 dark:bg-white/10 dark:text-white"
-        onClick={() => signIn()}
-      >
-        Log in
-      </button>
-      <button
-        className="rounded-full bg-black/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20 dark:bg-white/10 dark:text-white"
-        onClick={() => setIsGuest(true)}
-      >
-        Play as guest
-      </button>
+    <div className="h-6 sm:h-8">
+      <AnimatePresence>
+        {isIncorrect && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 2 }}
+            className="rounded-md bg-black p-1 text-center font-semibold text-white dark:bg-white dark:text-black"
+          >
+            Incorrect word
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

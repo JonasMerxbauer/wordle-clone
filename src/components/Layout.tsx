@@ -18,6 +18,7 @@ const Layout: React.FC<Props> = ({ children }) => {
       <div className="flex min-h-screen flex-col">
         <Nav />
         <main className="flex flex-grow">{children}</main>
+        <Footer />
       </div>
     </>
   );
@@ -28,7 +29,7 @@ const Nav: React.FC = () => {
   const { data: sessionData } = useSession();
 
   return (
-    <nav className="flex h-20 justify-around dark:bg-black">
+    <nav className="flex h-16 justify-around dark:bg-black sm:h-20">
       <button
         type="button"
         onClick={() => {
@@ -40,7 +41,7 @@ const Nav: React.FC = () => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="h-8 w-8"
+            className="h-10 w-10"
           >
             <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
           </svg>
@@ -49,7 +50,7 @@ const Nav: React.FC = () => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="h-8 w-8"
+            className="h-10 w-10"
           >
             <path
               fillRule="evenodd"
@@ -61,7 +62,7 @@ const Nav: React.FC = () => {
       </button>
       <div>
         {sessionData && (
-          <div className="m-4 flex gap-2 self-end">
+          <div className="m-2 flex gap-2 self-end sm:m-4">
             <Image
               alt="Profile picture"
               className="mr-1 rounded-full object-cover"
@@ -79,6 +80,27 @@ const Nav: React.FC = () => {
         )}
       </div>
     </nav>
+  );
+};
+
+const Footer: React.FC = () => {
+  return (
+    <footer className="flex h-16 items-center justify-around dark:bg-black">
+      <div>Created by Jonáš Merxbauer</div>
+      <a href="https://github.com/JonasMerxbauer/wordle-clone">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          className="h-10 w-10 fill-black dark:fill-white"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.458.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0 1 12 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48 3.97-1.32 6.833-5.054 6.833-9.458C22 6.463 17.522 2 12 2Z"
+          ></path>
+        </svg>
+      </a>
+    </footer>
   );
 };
 

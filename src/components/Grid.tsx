@@ -2,9 +2,11 @@ import { useAtom } from "jotai";
 import {
   currentGuessAtom,
   guessedWordsAtom,
+  incorrectAtom,
   searchedWordAtom,
 } from "../store/store";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const Grid: React.FC = () => {
   const [guesses] = useAtom(guessedWordsAtom);
@@ -42,8 +44,17 @@ const CompletedRow: React.FC<{ word: string }> = ({ word }) => {
 };
 
 const CurrentRow: React.FC<{ word: string[] }> = ({ word }) => {
+  const [incorrect, setIncorrect] = useAtom(incorrectAtom);
+
+  useEffect(() => {
+    setIncorrect(false);
+  }, [incorrect, setIncorrect]);
+
   return (
-    <div className="grid grid-cols-5 gap-1">
+    <motion.div
+      className="grid grid-cols-5 gap-1"
+      animate={incorrect && { x: [null, 10, 0, -10, 0, 10, 0] }}
+    >
       {word.map((letter, i) => {
         return <Letter key={i} value={letter} />;
       })}
@@ -52,7 +63,7 @@ const CurrentRow: React.FC<{ word: string[] }> = ({ word }) => {
         .map((letter, i) => {
           return <Letter key={5 - i} value={letter} />;
         })}
-    </div>
+    </motion.div>
   );
 };
 
@@ -106,7 +117,7 @@ const Letter: React.FC<{
 
   if (!value) {
     return (
-      <div className="flex h-14 w-14 rounded-sm border-2 border-gray-400 dark:border-gray-600">
+      <div className="flex h-12 w-12 rounded-sm border-2 border-gray-400 dark:border-gray-600 sm:h-14 sm:w-14">
         {value}
       </div>
     );
@@ -120,7 +131,7 @@ const Letter: React.FC<{
         duration: 0.2,
       }}
       className={
-        "flex h-14 w-14 select-none items-center justify-center rounded-sm text-xl font-bold text-gray-800 dark:text-gray-100" +
+        "flex h-12 w-12 select-none items-center  justify-center rounded-sm text-xl font-bold text-gray-800 dark:text-gray-100 sm:h-14 sm:w-14" +
         style
       }
     >
