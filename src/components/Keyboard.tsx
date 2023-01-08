@@ -32,10 +32,10 @@ const Keyboard = ({ onChar, onEnter, onBackspace }: Props) => {
       {keys.map((row: string[], i: number) => {
         return (
           <div key={i} className="flex justify-center">
-            {row.map((key) => {
+            {row.map((key, i) => {
               return (
                 <Key
-                  key={key}
+                  key={i}
                   onClick={onClick}
                   value={key}
                   status={keysWithStatus?.get(key)}
