@@ -35,7 +35,7 @@ const Nav: React.FC = () => {
   }, []);
 
   return (
-    <nav className="flex h-16 justify-between px-4 dark:bg-black sm:h-20">
+    <nav className="flex h-16 justify-between px-4 dark:bg-black sm:h-20 sm:px-64">
       {mounted && (
         <button
           type="button"
@@ -93,7 +93,7 @@ const Nav: React.FC = () => {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="flex h-16 items-center justify-between px-4 dark:bg-black">
+    <footer className="flex h-16 items-center justify-between px-4 dark:bg-black sm:px-64">
       <div>Created by Jonáš Merxbauer</div>
       <a
         title="Source code"
