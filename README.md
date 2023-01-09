@@ -1,6 +1,6 @@
 # Wordle clone
 
-This is a Wordle clone made by Jonáš Merxbauer as a learning exercise
+This is a Wordle clone made by Jonáš Merxbauer as a example code and learning exercise
 
 ## Deployment
 - [Deployed app](https://wordle-clone-five-theta.vercel.app)
